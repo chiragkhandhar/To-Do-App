@@ -6,7 +6,8 @@ import Item from "./Components/Item";
 
 // Icons
 import { CgAddR } from "react-icons/cg";
-function App() {
+
+const App = () => {
   const [state, setState] = useState({
     toDoList: [],
   });
@@ -87,6 +88,6 @@ function App() {
       )}
     </div>
   );
-}
+};
 
 export default App;
