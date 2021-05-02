@@ -29,7 +29,7 @@ export class Item extends Component {
         <Checkbox
           checked={listObject.isChecked}
           onChange={handleCBChange}
-          name={listObject.id}
+          name={listObject._id}
           color="primary"
         />
         {!listObject.isChecked ? (
@@ -44,7 +44,7 @@ export class Item extends Component {
           ) : (
             <>
               <TextField
-                name={listObject.id}
+                name={listObject._id}
                 variant="outlined"
                 value={listObject.item}
                 onChange={handleChange}
@@ -64,7 +64,7 @@ export class Item extends Component {
               {listObject.item === "" ? "Uncheck to edit" : listObject.item}
             </Typography>
 
-            <button name={listObject.id} onClick={handleRemove} className="remove-btn">
+            <button name={listObject._id} onClick={handleRemove} className="remove-btn">
               Remove
             </button>
           </>

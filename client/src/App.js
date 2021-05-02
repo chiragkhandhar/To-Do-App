@@ -1,5 +1,6 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 // Components
 import Item from "./Components/Item";
@@ -12,9 +13,19 @@ const App = () => {
     toDoList: [],
   });
 
+  useEffect(() => {
+    getAllItems();
+  }, []);
+
+  const getAllItems = () => {
+    axios.get("/api/items").then((items) => {
+      setState({ ...state, toDoList: items.data });
+    });
+  };
+
   const handleCBChange = (event) => {
     let toDoList = state.toDoList;
-    let index = toDoList.findIndex((obj) => obj.id == event.target.name);
+    let index = toDoList.findIndex((obj) => obj._id == event.target.name);
     let object = toDoList[index];
 
     if (event.target.checked) {
@@ -28,7 +39,7 @@ const App = () => {
 
   const handleRemove = (event) => {
     let toDoList = state.toDoList;
-    let index = toDoList.findIndex((obj) => obj.id == event.target.name);
+    let index = toDoList.findIndex((obj) => obj._id == event.target.name);
     let object = toDoList[index];
 
     if (object.isChecked) {
@@ -40,7 +51,7 @@ const App = () => {
 
   const handleChange = (event) => {
     let toDoList = state.toDoList;
-    let index = toDoList.findIndex((obj) => obj.id == event.target.name);
+    let index = toDoList.findIndex((obj) => obj._id == event.target.name);
     let object = toDoList[index];
     object.item = event.target.value;
     toDoList[index] = object;
@@ -54,7 +65,7 @@ const App = () => {
     let objectID = 0;
     objectID = state.toDoList && Math.floor(Math.random() * 1000000);
     const object = {
-      id: objectID,
+      _id: objectID,
       item: "",
       isChecked: false,
     };
@@ -76,7 +87,7 @@ const App = () => {
           {state.toDoList.map((listObject) => {
             return (
               <Item
-                key={listObject.id}
+                key={listObject._id}
                 listObject={listObject}
                 handleCBChange={handleCBChange}
                 handleChange={handleChange}

@@ -5,7 +5,6 @@ const Item = require("../models/item.model");
 exports.getAllItems = (request, response) => {
   Item.find()
     .then((items) => {
-      console.log(items);
       response.status(200).json(items);
     })
     .catch((err) =>
