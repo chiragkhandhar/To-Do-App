@@ -27,12 +27,27 @@ const App = () => {
     axios
       .post("/api/item", item)
       .then((res) => {
-        console.log(res);
-        api_getAllItems()
+        api_getAllItems();
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const api_updateItem = (item) => {
+    axios
+      .post("/api/item/update", item)
+      .then((res) => {
+        api_getAllItems();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getItem = (id) => {
+    let index = state.toDoList.findIndex((obj) => obj._id == id);
+    return state.toDoList[index];
   };
 
   const handleCBChange = (event) => {
@@ -40,13 +55,9 @@ const App = () => {
     let index = toDoList.findIndex((obj) => obj._id == event.target.name);
     let object = toDoList[index];
 
-    if (event.target.checked) {
-      object.isChecked = true;
-    } else {
-      object.isChecked = false;
-    }
-    toDoList[index] = object;
-    setState({ ...state, toDoList });
+    object.isChecked = event.target.checked ? true : false;
+
+    api_updateItem(object);
   };
 
   const handleRemove = (event) => {
@@ -98,6 +109,8 @@ const App = () => {
                 handleCBChange={handleCBChange}
                 handleChange={handleChange}
                 handleRemove={handleRemove}
+                getItem={getItem}
+                api_updateItem={api_updateItem}
               />
             );
           })}

@@ -12,6 +12,8 @@ export class Item extends Component {
   state = {
     isEdit: false,
   };
+ 
+
   toggleEditMode = () => {
     this.setState({
       isEdit: !this.state.isEdit,
@@ -19,8 +21,11 @@ export class Item extends Component {
   };
 
   handleSave = () => {
-    this.toggleEditMode()
-  }
+    const id = this.props.listObject._id;
+    const item = this.props.getItem(id);
+    this.props.api_updateItem(item);
+    this.toggleEditMode();
+  };
 
   render() {
     const {

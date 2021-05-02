@@ -2,6 +2,7 @@ const { request, response } = require("express");
 
 const Item = require("../models/item.model");
 
+// Get all Items
 exports.getAllItems = (request, response) => {
   Item.find()
     .then((items) => {
@@ -12,6 +13,7 @@ exports.getAllItems = (request, response) => {
     );
 };
 
+// Add new Item
 exports.addItem = (request, response) => {
   const item = {
     item: request.body.item,
@@ -25,6 +27,26 @@ exports.addItem = (request, response) => {
     .then(() => response.status(200).json({ code: "SUCCESS" }))
     .catch((err) => {
       console.log(err);
+      response.status(500).json({ code: "INTERNAL SERVER ERROR" });
+    });
+};
+
+// Update an Item
+
+exports.updateItem = (request, response) => {
+  Item.updateOne(
+    { _id: request.body._id },
+    {
+      $set: {
+        item: request.body.item,
+        isChecked: request.body.isChecked,
+      },
+    }
+  )
+    .then(() => {
+      response.status(200).json({ code: "SUCCESS" });
+    })
+    .catch((err) => {
       response.status(500).json({ code: "INTERNAL SERVER ERROR" });
     });
 };
