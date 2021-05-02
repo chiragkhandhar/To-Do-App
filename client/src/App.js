@@ -14,13 +14,25 @@ const App = () => {
   });
 
   useEffect(() => {
-    getAllItems();
+    api_getAllItems();
   }, []);
 
-  const getAllItems = () => {
+  const api_getAllItems = () => {
     axios.get("/api/items").then((items) => {
       setState({ ...state, toDoList: items.data });
     });
+  };
+
+  const api_addNewItem = (item) => {
+    axios
+      .post("/api/item", item)
+      .then((res) => {
+        console.log(res);
+        api_getAllItems()
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleCBChange = (event) => {
@@ -62,17 +74,11 @@ const App = () => {
   };
 
   const addNewItem = () => {
-    let objectID = 0;
-    objectID = state.toDoList && Math.floor(Math.random() * 1000000);
     const object = {
-      _id: objectID,
       item: "",
       isChecked: false,
     };
-
-    let oldList = state.toDoList;
-    oldList.push(object);
-    setState({ ...state, toDoList: oldList });
+    api_addNewItem(object);
   };
 
   return (

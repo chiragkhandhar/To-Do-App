@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import axios from "axios";
+
 import "../Styles/Item.css";
 
 // MUI Stuff
@@ -15,6 +17,11 @@ export class Item extends Component {
       isEdit: !this.state.isEdit,
     });
   };
+
+  handleSave = () => {
+    this.toggleEditMode()
+  }
+
   render() {
     const {
       listObject,
@@ -50,7 +57,9 @@ export class Item extends Component {
                 onChange={handleChange}
                 autoFocus
               />
-              <button onClick={this.toggleEditMode} className="save-btn">Save</button>
+              <button onClick={this.handleSave} className="save-btn">
+                Save
+              </button>
             </>
           )
         ) : (
@@ -59,12 +68,16 @@ export class Item extends Component {
               variant="body1"
               onClick={this.toggleEditMode}
               label="Click to edit"
-              className = "strikeout"
+              className="strikeout"
             >
               {listObject.item === "" ? "Uncheck to edit" : listObject.item}
             </Typography>
 
-            <button name={listObject._id} onClick={handleRemove} className="remove-btn">
+            <button
+              name={listObject._id}
+              onClick={handleRemove}
+              className="remove-btn"
+            >
               Remove
             </button>
           </>
