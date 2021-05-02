@@ -32,7 +32,6 @@ exports.addItem = (request, response) => {
 };
 
 // Update an Item
-
 exports.updateItem = (request, response) => {
   Item.updateOne(
     { _id: request.body._id },
@@ -47,6 +46,18 @@ exports.updateItem = (request, response) => {
       response.status(200).json({ code: "SUCCESS" });
     })
     .catch((err) => {
+      response.status(500).json({ code: "INTERNAL SERVER ERROR" });
+    });
+};
+
+// Delete an Item
+exports.deleteItem = (request, response) => {
+  Item.deleteOne({ _id: request.body._id })
+    .then(() => {
+      response.status(200).json({ code: "SUCCESS" });
+    })
+    .catch((err) => {
+      console.log(err);
       response.status(500).json({ code: "INTERNAL SERVER ERROR" });
     });
 };

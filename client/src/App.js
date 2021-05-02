@@ -45,6 +45,17 @@ const App = () => {
       });
   };
 
+  const api_deleteItem = (item) => {
+    axios
+      .post("/api/item/delete", item)
+      .then((res) => {
+        api_getAllItems();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const getItem = (id) => {
     let index = state.toDoList.findIndex((obj) => obj._id == id);
     return state.toDoList[index];
@@ -64,12 +75,12 @@ const App = () => {
     let toDoList = state.toDoList;
     let index = toDoList.findIndex((obj) => obj._id == event.target.name);
     let object = toDoList[index];
+    api_deleteItem(object);
+    // if (object.isChecked) {
+    //   toDoList.splice(index, 1);
+    // }
 
-    if (object.isChecked) {
-      toDoList.splice(index, 1);
-    }
-
-    setState({ ...state, toDoList });
+    // setState({ ...state, toDoList });
   };
 
   const handleChange = (event) => {
