@@ -12,7 +12,6 @@ export class Item extends Component {
   state = {
     isEdit: false,
   };
- 
 
   toggleEditMode = () => {
     this.setState({

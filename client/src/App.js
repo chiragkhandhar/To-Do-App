@@ -76,11 +76,6 @@ const App = () => {
     let index = toDoList.findIndex((obj) => obj._id == event.target.name);
     let object = toDoList[index];
     api_deleteItem(object);
-    // if (object.isChecked) {
-    //   toDoList.splice(index, 1);
-    // }
-
-    // setState({ ...state, toDoList });
   };
 
   const handleChange = (event) => {
